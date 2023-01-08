@@ -8,6 +8,6 @@ import (
 
 func main() {
 	r := gin.Default()
-	routes.Routes(r)
+	routes.BurgerRoute(r)
 	log.Fatal(r.Run(":8081"))
 }
