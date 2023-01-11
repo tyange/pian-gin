@@ -8,7 +8,14 @@ import (
 )
 
 func GetAllBurger(c *gin.Context) {
-	c.String(200, "this is burger route")
+	var burgers []models.Burger
+	result := config.DB.Find(&burgers)
+
+	if result.Error != nil {
+		c.JSON(400, result.Error)
+	}
+
+	c.JSON(200, &burgers)
 }
 
 func GetBurger(c *gin.Context) {
