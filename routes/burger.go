@@ -6,5 +6,7 @@ import (
 )
 
 func BurgerRoute(router *gin.Engine) {
-	router.GET("/", controllers.BurgerController)
+	router.GET("/burger", controllers.GetAllBurger)
+	router.POST("/burger", controllers.AddBurger)
+	router.GET("/burger/:id", controllers.GetBurger)
 }
