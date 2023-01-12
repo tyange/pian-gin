@@ -6,7 +6,7 @@ import (
 
 type Burger struct {
 	gorm.Model
-	Id          uint `gorm:"primary_key"`
+	ID          uint `gorm:"primary_key"`
 	Name        string
 	Brand       string
 	Description string

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"pian-gin/config"
 	"pian-gin/models"
@@ -19,7 +18,16 @@ func GetAllBurger(c *gin.Context) {
 }
 
 func GetBurger(c *gin.Context) {
-	fmt.Println(c.Param("id"))
+	burger := models.Burger{}
+	burgerId := c.Param("id")
+
+	result := config.DB.Find(&burger, burgerId)
+
+	if result.Error != nil {
+		c.JSON(400, result.Error)
+	}
+
+	c.JSON(200, &burger)
 }
 
 func AddBurger(c *gin.Context) {
@@ -37,6 +45,6 @@ func AddBurger(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{
-		"burgerId": burger.Id,
+		"burgerId": burger.ID,
 	})
 }
