@@ -9,4 +9,5 @@ func BurgerRoute(router *gin.Engine) {
 	router.GET("/burger", controllers.GetAllBurger)
 	router.POST("/burger", controllers.AddBurger)
 	router.GET("/burger/:id", controllers.GetBurger)
+	router.PUT("/burger/:id", controllers.EditBurger)
 }
