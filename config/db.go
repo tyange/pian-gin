@@ -29,6 +29,9 @@ func ConnectDB() {
 		panic(err)
 	}
 
-	db.AutoMigrate(&models.Burger{})
+	if db.AutoMigrate(&models.Burger{}, &models.User{}) != nil {
+		log.Fatal("Failed DB auto migration.")
+	}
+
 	DB = db
 }
