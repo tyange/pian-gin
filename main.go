@@ -11,5 +11,6 @@ func main() {
 	r := gin.Default()
 	config.ConnectDB()
 	routes.BurgerRoute(r)
+	routes.UserRouter(r)
 	log.Fatal(r.Run(":8081"))
 }
