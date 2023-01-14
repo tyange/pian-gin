@@ -48,3 +48,26 @@ func AddBurger(c *gin.Context) {
 		"burgerId": burger.ID,
 	})
 }
+
+func EditBurger(c *gin.Context) {
+	burger := models.Burger{}
+	foundBurger := config.DB.Find(&burger, c.Param("id"))
+
+	if foundBurger.Error != nil {
+		c.JSON(400, foundBurger.Error)
+	}
+
+	err := c.Bind(&burger)
+
+	if err != nil {
+		c.JSON(400, err)
+	}
+
+	result := config.DB.Save(&burger)
+
+	if result.Error != nil {
+		c.JSON(400, result.Error)
+	}
+
+	c.JSON(200, &burger)
+}
