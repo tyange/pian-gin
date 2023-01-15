@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+	emailverifier "github.com/AfterShip/email-verifier"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
@@ -9,6 +11,10 @@ import (
 	"pian-gin/config"
 	"pian-gin/models"
 	"time"
+)
+
+var (
+	verifier = emailverifier.NewVerifier()
 )
 
 func SignUp(c *gin.Context) {
@@ -25,6 +31,24 @@ func SignUp(c *gin.Context) {
 
 		return
 	}
+
+	ret, err := verifier.Verify(body.Email)
+
+	if err != nil {
+		c.JSON(400, err)
+
+		return
+	}
+
+	if !ret.Syntax.Valid {
+		c.JSON(400, gin.H{
+			"error": "email address syntax is invalid",
+		})
+
+		return
+	}
+
+	fmt.Println("email validation result", ret)
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
 
